@@ -19,7 +19,7 @@ with open('01input.txt', 'r') as f:
             dial_position = (dial_position + number) % 100
         
         elif letter == "L":
-            dial_position = (dial_position - number) % 100
+            dial_position = (dial_position - number) % 100  
 
         if dial_position == 0:
             count = count + 1
