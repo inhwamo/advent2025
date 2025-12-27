@@ -12,3 +12,21 @@ for ranges in ranges:
 # An invalid ID is some pattern repeated exactly twice - so the length must be even
 # Split in half to check
 
+def is_invalid(num):
+    s = str(num)
+    # if length is odd, can't be a repeated pattern
+    if len(s) % 2 != 0:
+        return False
+    mid = len(s) // 2
+    first_half = s[:mid]
+    second_half = s[mid:]
+    
+    return first_half == second_half
+
+
+for start, end in parsed_ranges:
+    for num in range(start, end + 1):  # +1 because range is inclusive
+        if is_invalid(num):
+            sum += num
+
+print(sum)
