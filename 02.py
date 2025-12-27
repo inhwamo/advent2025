@@ -12,7 +12,8 @@ for ranges in ranges:
 # An invalid ID is some pattern repeated exactly twice - so the length must be even
 # Split in half to check
 
-def is_invalid(num):
+# part 1
+def is_invalid1(num):
     s = str(num)
     # if length is odd, can't be a repeated pattern
     if len(s) % 2 != 0:
@@ -23,10 +24,28 @@ def is_invalid(num):
     
     return first_half == second_half
 
+# part 2
+def is_invalid2(num):
+    s = str(num)
+    
+    # try all possible pattern lengths
+    for pattern_length in range(1, len(s)):
+        # can this pattern_length work?
+        if len(s) % pattern_length != 0:
+            continue  # skip, doesn't divide evenly
+        
+        # extract the pattern
+        pattern = s[:pattern_length]
+        
+        # check if whole string is this pattern repeated
+        # hint: pattern * (len(s) // pattern_length) should equal s
+        
+    return False  # if no pattern worked
+
 
 for start, end in parsed_ranges:
     for num in range(start, end + 1):  # +1 because range is inclusive
-        if is_invalid(num):
+        if is_invalid2(num):
             sum += num
 
 print(sum)
