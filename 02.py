@@ -36,6 +36,9 @@ def is_invalid2(num):
         
         # extract the pattern
         pattern = s[:pattern_length]
+
+        if (pattern * (len(s) // pattern_length)) == s:
+            return True
         
         # check if whole string is this pattern repeated
         # hint: pattern * (len(s) // pattern_length) should equal s
