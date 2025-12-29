@@ -3,3 +3,5 @@ venv/
 # ignore puzzle inputs
 *.txt
 *input.txt
+
+.DS_Store
