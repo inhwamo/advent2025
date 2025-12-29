@@ -1,10 +1,12 @@
 total = 0
 grid = []
 
-with open('04input.txt', 'r') as f:
+with open('04input.txt','r') as f:
     for line in f:
-        grid.append(line.strip())
-
+        grid.append(list(line.strip()))
+    
+while True:
+    to_remove = []
     for row in range(len(grid)):
         for col in range(len(grid[row])):
             if grid[row][col] == '@': # found a roll
@@ -26,7 +28,13 @@ with open('04input.txt', 'r') as f:
                             adjacent_count += 1
                             
                 if adjacent_count < 4:
-                    total +=1
+                    to_remove.append((row, col))
 
+    if len(to_remove) == 0:
+        break
 
-print (total)
+    for row, col in to_remove:
+        grid[row][col] = '.'
+        total += 1   
+
+print(total)
