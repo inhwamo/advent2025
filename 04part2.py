@@ -3,7 +3,7 @@ grid = []
 
 with open('04input.txt','r') as f:
     for line in f:
-        grid.append(list(line.strip()))
+        grid.append(list(line.strip())) # strings are immutable, so use list
     
 while True:
     to_remove = []
