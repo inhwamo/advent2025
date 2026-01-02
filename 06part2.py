@@ -1,0 +1,69 @@
+# Same parsing as part 1 
+# but instead of slicing rows horizontally, need to read columns vertically within each problem.
+
+with open('06input.txt', 'r') as f:
+    grid = [line.rstrip('\n') for line in f] # grid is a list of strings, one per row
+
+max_width = max(len(row) for row in grid)
+# Pad all rows to same width
+grid = [row.ljust(max_width) for row in grid] # ljust pads with spaces on the right so every row has the same length
+
+# Defines a separator column, which is all spaces vertically
+def is_separator(col_idx):
+    return all(grid[row][col_idx] == ' ' for row in range(len(grid)))
+
+# Find problem boundaries
+problems = []
+start = None
+
+for col in range(max_width):
+    if is_separator(col):
+        if start is not None: # end the current problem, if currently inside a problem and you reach separator
+            problems.append((start, col)) # add defined problem
+            start = None
+    else:
+        if start is None: # start a new problem, if not currently inside a problem
+            start = col
+
+# last problem 
+if start is not None:
+    problems.append((start, max_width))
+
+total = 0
+
+######
+
+for (start_col, end_col) in problems:
+    operator = None
+    numbers = []
+    
+    # Read each column within this problem
+    for col in range(start_col, end_col):
+        digits = ""
+        
+        for row in grid[:-1]:  # all rows EXCEPT last (operator row)
+            char = row[col]
+            if char != ' ':
+                digits += char
+        
+        if digits:  # if we found any digits in this column
+            numbers.append(int(digits))
+    
+    # Find operator (it's somewhere in the last row of this problem)
+    last_row_segment = grid[-1][start_col:end_col]
+    if '+' in last_row_segment:
+        operator = '+'
+    else:
+        operator = '*'
+    
+    # Calculate (same as before)
+    if operator == '+':
+        result = sum(numbers)
+    else:
+        result = 1
+        for n in numbers:
+            result *= n
+    
+    total += result
+
+print(total)
